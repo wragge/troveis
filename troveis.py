@@ -12,6 +12,7 @@ cache = Cache(app, config={'CACHE_TYPE': 'filesystem', 'CACHE_DIR': 'cache'})
 
 ERROR_MESSAGE = 'Something wen\'t wrong. Try again later.'
 MAX_TOTAL = 30000
+SORT_OPTIONS = ['relevance', 'dateasc', 'datedesc']
 
 ZONES = {
 	'book': 'books, theses, proceedings',
@@ -71,8 +72,9 @@ def get_examples():
 		'encoding': 'json',
 		'l-availability': 'y',
 		'reclevel': 'full',
-		'n': 5,
+		'n': 10,
 		's': start,
+		'sortby': random.choice(SORT_OPTIONS),
 		'key': credentials.TROVE_API_KEY
 	}
 	results = get_results(params)
@@ -92,7 +94,7 @@ def check_for_image(record):
 
 def process_results(totals, examples):
 	zones = {}
-	record_num = random.randint(0,4)
+	record_num = random.randint(0,9)
 	for zone in totals['response']['zone']:
 		zones[zone['name']] = {'total': '{:,}'.format(int(zone['records']['total']))}
 	for zone in examples['response']['zone']:
@@ -120,7 +122,7 @@ def process_results(totals, examples):
 				details['url'] = record['troveUrl']
 				date = record['issued'] if 'issued' in record else None
 				contributors = record['contributor'] if 'contributor' in record else None
-				details['citation'] = '{}{}{}'.format(', '.join(contributors) if contributors else '', '<br>' if contributors else '', date if date else '')
+				details['citation'] = u'{}{}{}'.format(', '.join(contributors).encode('utf-8').strip() if contributors else '', '<br>' if contributors else '', date if date else '')
 			details['name'] = z_name
 			details['label'] = ZONES[z_name]
 			zones[zone['name']] = details
