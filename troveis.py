@@ -63,7 +63,7 @@ def get_totals():
 	results = get_results(params)
 	return results
 
-@cache.cached(timeout=60, key_prefix='get_examples')
+@cache.cached(timeout=120, key_prefix='get_examples')
 def get_examples():
 	start = random.randint(0, MAX_TOTAL)
 	params = {
