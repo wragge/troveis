@@ -122,7 +122,11 @@ def process_results(totals, examples):
 				details['url'] = record['troveUrl']
 				date = record['issued'] if 'issued' in record else None
 				contributors = record['contributor'] if 'contributor' in record else None
-				details['citation'] = u'{}{}{}'.format(', '.join(contributors).encode('utf-8').strip() if contributors else '', '<br>' if contributors else '', date if date else '')
+				try:
+					#fix this later
+					details['citation'] = u'{}{}{}'.format(', '.join(contributors).encode('utf-8').strip() if contributors else '', '<br>' if contributors else '', date if date else '')
+				except:
+					pass
 			details['name'] = z_name
 			details['label'] = ZONES[z_name]
 			zones[zone['name']] = details
