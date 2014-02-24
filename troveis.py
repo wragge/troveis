@@ -69,10 +69,9 @@ def get_examples():
 		'q': ' ',
 		'zone': 'all',
 		'encoding': 'json',
-		'n': 0,
 		'l-availability': 'y',
 		'reclevel': 'full',
-		'n': 1,
+		'n': 5,
 		's': start,
 		'key': credentials.TROVE_API_KEY
 	}
@@ -93,6 +92,7 @@ def check_for_image(record):
 
 def process_results(totals, examples):
 	zones = {}
+	record_num = random.randint(0,4)
 	for zone in totals['response']['zone']:
 		zones[zone['name']] = {'total': '{:,}'.format(int(zone['records']['total']))}
 	for zone in examples['response']['zone']:
@@ -100,21 +100,21 @@ def process_results(totals, examples):
 		details = zones[z_name]
 		try:
 			if z_name == 'newspaper':
-				record = zone['records']['article'][0]
+				record = zone['records']['article'][record_num]
 				details['title'] = record['heading']
 				details['image_url'] = record['pdf'][:-6]
 				details['url'] = record['troveUrl']
 				date = format_iso_date(record['date'])
 				details['citation'] = '{}, {}'.format(date, record['title']['value'])
 			elif z_name == 'list':
-				record = zone['records']['list'][0]
+				record = zone['records']['list'][record_num]
 				details['title'] = record['title']
 				details['url'] = record['troveUrl']
 				details['citation'] = '{}, {}'.format(record['creator'].replace('public:', ''), record['created'][:4])
 			elif z_name == 'people':
 				details['url'] = 'http://trove.nla.gov.au/people/result?q='
 			else:
-				record = zone['records']['work'][0]
+				record = zone['records']['work'][record_num]
 				details['title'] = record['title']
 				details['image_url'] = check_for_image(record)
 				details['url'] = record['troveUrl']
