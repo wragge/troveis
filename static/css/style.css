@@ -13,14 +13,17 @@ body { color: #fff; font-family: 'Lato', 'Open Sans', sans-serif;}
 
 .row0, .row1, .row2, .row3, .row4, .row5, .row6, .row7, .row8, .row9, .row10 { margin-bottom: 20px; padding: 40px;}
 
-h1 {font-size: 90px; color: #333;}
-h2 {font-size: 55px; margin: 0;}
+@media (min-width: 768px) {
+	h1 { font-size: 90px; }
+	h2 {font-size: 55px; margin: 0;}
+	p { font-size: 15px;}
+	.thumbnail {margin-bottom: 0;}
+}
 
-p { font-size: 15px;}
+h1 { color: #333; }
 
 .zone-label { font-size: 25px;}
 
-.thumbnail {margin-bottom: 0;}
 
 .citation { opacity: 0.6;}
 
