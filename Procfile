@@ -1,1 +1,1 @@
-web: gunicorn troveis:app --worker-class gevent
+web: gunicorn troveis:app
