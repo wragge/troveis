@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template, jsonify
 import random
 import requests
 from flask.ext.cache import Cache
@@ -28,16 +28,24 @@ ZONES = {
 
 @app.route('/')
 def trove_is():
+	zones = []
 	totals = get_totals()
-	examples = get_examples()
-	if totals is None or examples is None:
+	#examples = get_examples()
+	if totals is None:
 		message = ERROR_MESSAGE
 		zones = None
 	else:
-		zones = process_results(totals, examples)
+		for zone in totals['response']['zone']:
+			details = {
+				'name': zone['name'],
+				'label': ZONES[zone['name']],
+				'total': '{:,}'.format(int(zone['records']['total']))
+			}
+			zones.append(details)
+		zones.append({'name': 'website', 'label': 'archived web pages', 'total': '80,000,000', 'url': 'http://trove.nla.gov.au/website/result?q='})
+		random.shuffle(zones)
 		message = None
 	return render_template('troveis.html', zones=zones, message=message)
-
 
 def get_results(params):
 	try:
@@ -79,6 +87,148 @@ def get_examples():
 	}
 	results = get_results(params)
 	return results
+
+
+def get_zone_total(zone_name):
+	totals = get_totals()
+	for zone in totals['response']['zone']:
+		if zone['name'] == zone_name:
+			total = zone['records']['total']
+			break
+	return int(total)
+
+
+def get_items(zone, total, reclevel='brief'):
+	start = random.randint(0, total)
+	params = {
+		'q': ' ',
+		'zone': zone,
+		'encoding': 'json',
+		'l-availability': 'y',
+		'reclevel': reclevel,
+		'n': 20,
+		's': start,
+		'sortby': random.choice(SORT_OPTIONS),
+		'key': credentials.TROVE_API_KEY
+	}
+	results = get_results(params)
+	return results
+
+
+@cache.cached(timeout=220, key_prefix='get_newspapers')
+def get_newspapers():
+	total = MAX_TOTAL
+	results = get_items('newspaper', total, reclevel='full')
+	return results
+
+
+@app.route('/newspaper.json')
+def get_newspaper():
+	newspapers = get_newspapers()
+	newspaper = random.choice(newspapers['response']['zone'][0]['records']['article'])
+	return jsonify(newspaper)
+
+
+@cache.cached(timeout=240, key_prefix='get_books')
+def get_books():
+	total = MAX_TOTAL
+	results = get_items('book', total)
+	return results
+
+
+@app.route('/book.json')
+def get_book():
+	books = get_books()
+	book = random.choice(books['response']['zone'][0]['records']['work'])
+	return jsonify(book)
+
+
+@cache.cached(timeout=260, key_prefix='get_articles')
+def get_articles():
+	total = MAX_TOTAL
+	results = get_items('article', total)
+	return results
+
+
+@app.route('/article.json')
+def get_article():
+	articles = get_articles()
+	article = random.choice(articles['response']['zone'][0]['records']['work'])
+	return jsonify(article)
+
+
+@cache.cached(timeout=280, key_prefix='get_maps')
+def get_maps():
+	total = MAX_TOTAL
+	#total = get_zone_total('map')
+	results = get_items('map', total)
+	return results
+
+
+@app.route('/map.json')
+def get_map():
+	maps = get_maps()
+	rmap = random.choice(maps['response']['zone'][0]['records']['work'])
+	return jsonify(rmap)
+
+
+@cache.cached(timeout=300, key_prefix='get_sounds')
+def get_sounds():
+	total = MAX_TOTAL
+	results = get_items('music', total)
+	return results
+
+
+@app.route('/sound.json')
+def get_sound():
+	sounds = get_sounds()
+	sound = random.choice(sounds['response']['zone'][0]['records']['work'])
+	return jsonify(sound)
+
+
+@cache.cached(timeout=320, key_prefix='get_pictures')
+def get_pictures():
+	total = MAX_TOTAL
+	results = get_items('picture', total)
+	return results
+
+
+@app.route('/picture.json')
+def get_picture():
+	pictures = get_pictures()
+	picture = random.choice(pictures['response']['zone'][0]['records']['work'])
+	return jsonify(picture)
+
+
+@cache.cached(timeout=340, key_prefix='get_archives')
+def get_archives():
+	total = MAX_TOTAL
+	#total = get_zone_total('collection')
+	results = get_items('collection', total)
+	return results
+
+
+@app.route('/archive.json')
+def get_archive():
+	archives = get_archives()
+	archive = random.choice(archives['response']['zone'][0]['records']['work'])
+	return jsonify(archive)
+
+
+@cache.cached(timeout=360, key_prefix='get_lists')
+def get_lists():
+	total = MAX_TOTAL
+	#total = get_zone_total('list')
+	results = get_items('list', total, reclevel='full')
+	return results
+
+
+@app.route('/list.json')
+def get_list():
+	lists = get_lists()
+	rlist = random.choice(lists['response']['zone'][0]['records']['list'])
+	return jsonify(rlist)
+
 
 def check_for_image(record):
 	image_url = None

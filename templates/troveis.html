@@ -38,12 +38,12 @@
         <div class="col-md-offset-2 col-md-8">
           {% for zone in zones %}
             
-            <div class="row row{{ loop.index }}">
+            <div class="row row{{ loop.index }}" >
               <div class="col-md-6">
                 <h2>{{ zone.total }}</h2>
                 <p class="zone-label">{{ zone.label }}</p>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6" id="{{ zone.name }}">
               {% if zone.image_url %}
                 <div class="row">
                   <div class="col-md-6">
@@ -91,5 +91,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/moment.min.js"></script>
+    <script src="/static/js/jquery.loadTemplate.min.js"></script>
+    <script src="/static/js/script.js"></script>
   </body>
 </html>
