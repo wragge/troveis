@@ -41,6 +41,9 @@ def trove_is():
 				'label': ZONES[zone['name']],
 				'total': '{:,}'.format(int(zone['records']['total']))
 			}
+			if zone['name'] == 'people':
+				details['url'] = 'http://trove.nla.gov.au/people/result?q='
+				print details
 			zones.append(details)
 		zones.append({'name': 'website', 'label': 'archived web pages', 'total': '80,000,000', 'url': 'http://trove.nla.gov.au/website/result?q='})
 		random.shuffle(zones)

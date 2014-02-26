@@ -44,38 +44,13 @@
                 <p class="zone-label">{{ zone.label }}</p>
               </div>
               <div class="col-md-6" id="{{ zone.name }}">
-              {% if zone.image_url %}
-                <div class="row">
-                  <div class="col-md-6">
-                    <a href="{{ zone.url }}" class="thumbnail">
-                      <img src="{{ zone.image_url }}" alt="...">
-                    </a>
-                  </div>
-                  <div class="col-md-6">
-                    <p>{{ zone.title }}</p>
-                    {% if zone.citation %}
-                    <p class="citation">
-                      {{ zone.citation|safe }}
-                    </p>
-                    {% endif %}
-                    <a class="zone-link" href="{{ zone.url }}">
-                      <i class="fa fa-arrow-circle-right fa-5x pull-right"></i>
-                    </a>
-                  </div>
-                </div>
-              {% else %}
-                {% if zone.title %}
-                  <p>{{ zone.title }}</p>
+                {% if zone.url %}
+                  <a href="{{ zone.url }}" class="zone-link">
+                    <i class="fa fa-arrow-circle-right fa-5x pull-right"></i>
+                  </a>
+                {% else %}
+                  <i class="fa fa-refresh fa-spin fa-2x pull-right"></i>
                 {% endif %}
-                {% if zone.citation %}
-                <p class="citation">
-                  {{ zone.citation|safe }}
-                </p>
-                {% endif %}
-                <a class="zone-link" href="{{ zone.url }}">
-                  <i class="fa fa-arrow-circle-right fa-5x pull-right"></i>
-                </a>
-              {% endif %}
               </div>
             </div>
             
