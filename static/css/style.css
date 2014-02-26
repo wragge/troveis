@@ -28,6 +28,7 @@ h1 { color: #333; }
 .citation { opacity: 0.6;}
 
 a { color: #326215;}
+a:hover { color: #104B38; }
 
 a.zone-link { color: #fff;}
 
@@ -39,4 +40,8 @@ a.thumbnail.active {
 
 blockquote {
 	color: #619741;
+}
+
+footer {
+	color: #333;
 }
