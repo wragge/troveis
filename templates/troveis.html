@@ -39,11 +39,11 @@
           {% for zone in zones %}
             
             <div class="row row{{ loop.index }}" >
-              <div class="col-md-6">
+              <div class="col-md-6 col-sm-6">
                 <h2>{{ zone.total }}</h2>
                 <p class="zone-label">{{ zone.label }}</p>
               </div>
-              <div class="col-md-6" id="{{ zone.name }}">
+              <div class="col-md-6 col-sm-6 " id="{{ zone.name }}">
                 {% if zone.url %}
                   <a href="{{ zone.url }}" class="zone-link">
                     <i class="fa fa-arrow-circle-right fa-5x pull-right"></i>
