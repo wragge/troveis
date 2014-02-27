@@ -11,7 +11,7 @@ app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': 'filesystem', 'CACHE_DIR': 'cache'})
 
 ERROR_MESSAGE = 'Something wen\'t wrong. Try again later.'
-MAX_TOTAL = 30000
+MAX_TOTAL = 1000000
 SORT_OPTIONS = ['relevance', 'dateasc', 'datedesc']
 
 ZONES = {
@@ -162,7 +162,7 @@ def get_article():
 
 @cache.cached(timeout=280, key_prefix='get_maps')
 def get_maps():
-	total = MAX_TOTAL
+	total = 150000
 	#total = get_zone_total('map')
 	results = get_items('map', total)
 	return results
@@ -205,7 +205,7 @@ def get_picture():
 
 @cache.cached(timeout=340, key_prefix='get_archives')
 def get_archives():
-	total = MAX_TOTAL
+	total = 370000
 	#total = get_zone_total('collection')
 	results = get_items('collection', total)
 	return results
@@ -220,7 +220,7 @@ def get_archive():
 
 @cache.cached(timeout=360, key_prefix='get_lists')
 def get_lists():
-	total = MAX_TOTAL
+	total = 32000
 	#total = get_zone_total('list')
 	results = get_items('list', total, reclevel='full')
 	return results
