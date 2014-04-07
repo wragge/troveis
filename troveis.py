@@ -8,22 +8,10 @@ import pickle
 
 import credentials
 
-#CONTEXT = 'local'
-CONTEXT = 'production'
 
 app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': 'filesystem', 'CACHE_DIR': 'cache'})
 
-class WebFactionMiddleware(object):
-    def __init__(self, app):
-        self.app = app
-
-    def __call__(self, environ, start_response):
-        environ['SCRIPT_NAME'] = '/'
-        return self.app(environ, start_response)
-
-if CONTEXT == 'production':
-    app.wsgi_app = WebFactionMiddleware(app.wsgi_app)
 
 ERROR_MESSAGE = 'Something wen\'t wrong. Try again later.'
 MAX_TOTAL = 1000000
@@ -200,7 +188,6 @@ def get_sound():
 
 @cache.cached(timeout=60*60, key_prefix='get_pictures')
 def get_pictures():
-	total = MAX_TOTAL
 	results = get_zone_results('picture')
 	return results
 
