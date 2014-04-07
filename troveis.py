@@ -11,7 +11,7 @@ import credentials
 print 'I AM ALIVE!'
 
 app = Flask(__name__)
-cache = Cache(app, config={'CACHE_TYPE': 'filesystem', 'CACHE_DIR': 'cache'})
+cache = Cache(app, config={'CACHE_TYPE': 'filesystem', 'CACHE_DIR': '/home/dhistory/webapps/troveis/troveis/cache'})
 
 
 ERROR_MESSAGE = 'Something wen\'t wrong. Try again later.'
@@ -68,7 +68,7 @@ def get_results(params):
 
 @cache.cached(timeout=60*60*24, key_prefix='get_totals')
 def get_totals():
-	with open('totals.pickle', 'rb') as zone_file:
+	with open('/home/dhistory/webapps/troveis/troveis/totals.pickle', 'rb') as zone_file:
 		results = pickle.load(zone_file)
 	return results
 
@@ -117,7 +117,7 @@ def get_items(zone, total, reclevel='brief'):
 
 
 def get_zone_results(zone):
-	with open('{}.pickle'.format(zone), 'rb') as zone_file:
+	with open('/home/dhistory/webapps/troveis/troveis/{}.pickle'.format(zone), 'rb') as zone_file:
 		results = pickle.load(zone_file)
 	return results
 
