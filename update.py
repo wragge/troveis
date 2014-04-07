@@ -77,4 +77,4 @@ zone = args.zone
 if zone == 'total':
 	update_totals()
 elif zone:
-	update_zone(args.zone)
+	update_zone(zone)
