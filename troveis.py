@@ -19,7 +19,7 @@ class WebFactionMiddleware(object):
         self.app = app
 
     def __call__(self, environ, start_response):
-        environ['SCRIPT_NAME'] = '/troveis'
+        environ['SCRIPT_NAME'] = '/'
         return self.app(environ, start_response)
 
 if CONTEXT == 'production':
