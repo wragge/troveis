@@ -22,6 +22,7 @@ ZONES = {
 def update_zone(zone):
 	results = get_items(zone, ZONES[zone]['total'], ZONES[zone]['reclevel'])
 	if results:
+		print 'OK'
 		with open('{}.pickle'.format(zone), 'wb') as zone_file:
 			pickle.dump(results, zone_file)
 
