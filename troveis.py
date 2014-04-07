@@ -123,7 +123,7 @@ def get_zone_results(zone):
 	return results
 
 
-@cache.cached(timeout=60*60, key_prefix='get_newspapers')
+@cache.cached(timeout=60*30, key_prefix='get_newspapers')
 def get_newspapers():
 	results = get_zone_results('newspaper')
 	return results
@@ -136,7 +136,7 @@ def get_newspaper():
 	return jsonify(newspaper)
 
 
-@cache.cached(timeout=60*60, key_prefix='get_books')
+@cache.cached(timeout=60*30, key_prefix='get_books')
 def get_books():
 	results = get_zone_results('book')
 	return results
@@ -149,7 +149,7 @@ def get_book():
 	return jsonify(book)
 
 
-@cache.cached(timeout=60*60, key_prefix='get_articles')
+@cache.cached(timeout=60*30, key_prefix='get_articles')
 def get_articles():
 	results = get_zone_results('article')
 	return results
@@ -162,7 +162,7 @@ def get_article():
 	return jsonify(article)
 
 
-@cache.cached(timeout=60*60, key_prefix='get_maps')
+@cache.cached(timeout=60*30, key_prefix='get_maps')
 def get_maps():
 	results = get_zone_results('map')
 	return results
@@ -175,7 +175,7 @@ def get_map():
 	return jsonify(rmap)
 
 
-@cache.cached(timeout=60*60, key_prefix='get_sounds')
+@cache.cached(timeout=60*30, key_prefix='get_sounds')
 def get_sounds():
 	results = get_zone_results('music')
 	return results
@@ -188,7 +188,7 @@ def get_sound():
 	return jsonify(sound)
 
 
-@cache.cached(timeout=60*60, key_prefix='get_pictures')
+@cache.cached(timeout=60*30, key_prefix='get_pictures')
 def get_pictures():
 	results = get_zone_results('picture')
 	return results
@@ -201,7 +201,7 @@ def get_picture():
 	return jsonify(picture)
 
 
-@cache.cached(timeout=60*60, key_prefix='get_archives')
+@cache.cached(timeout=60*30, key_prefix='get_archives')
 def get_archives():
 	results = get_zone_results('collection')
 	return results
@@ -214,7 +214,7 @@ def get_archive():
 	return jsonify(archive)
 
 
-@cache.cached(timeout=60*60, key_prefix='get_lists')
+@cache.cached(timeout=60*30, key_prefix='get_lists')
 def get_lists():
 	results = get_zone_results('list')
 	return results
