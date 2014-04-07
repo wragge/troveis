@@ -8,8 +8,22 @@ import pickle
 
 import credentials
 
+#CONTEXT = 'local'
+CONTEXT = 'production'
+
 app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': 'filesystem', 'CACHE_DIR': 'cache'})
+
+class WebFactionMiddleware(object):
+    def __init__(self, app):
+        self.app = app
+
+    def __call__(self, environ, start_response):
+        environ['SCRIPT_NAME'] = '/troveis'
+        return self.app(environ, start_response)
+
+if CONTEXT == 'production':
+    app.wsgi_app = WebFactionMiddleware(app.wsgi_app)
 
 ERROR_MESSAGE = 'Something wen\'t wrong. Try again later.'
 MAX_TOTAL = 1000000
