@@ -8,6 +8,7 @@ import pickle
 
 import credentials
 
+print 'I AM ALIVE!'
 
 app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': 'filesystem', 'CACHE_DIR': 'cache'})
