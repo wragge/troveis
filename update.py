@@ -7,22 +7,22 @@ import credentials
 SORT_OPTIONS = ['relevance', 'dateasc', 'datedesc']
 
 ZONES = {
-	'book': {'reclevel': 'brief', 'total': 1000000},
-	'article': {'reclevel': 'brief', 'total': 1000000},
-	'music': {'reclevel': 'brief', 'total': 1000000},
-	'map': {'reclevel': 'brief', 'total': 150000},
-	'picture': {'reclevel': 'brief', 'total': 1000000},
-	'list': {'reclevel': 'full', 'total': 32000},
-	'collection': {'reclevel': 'brief', 'total': 370000},
-	'people': {'reclevel': 'brief', 'total': 1000000},
-	'newspaper': {'reclevel': 'full', 'total': 10000000}
+	'book': {'reclevel': 'brief', 'total': 1000000, 'aus': True},
+	'article': {'reclevel': 'brief', 'total': 1000000, 'aus': True},
+	'music': {'reclevel': 'brief', 'total': 200000, 'aus': True},
+	'map': {'reclevel': 'brief', 'total': 40000, 'aus': True},
+	'picture': {'reclevel': 'brief', 'total': 1000000, 'aus': True},
+	'list': {'reclevel': 'full', 'total': 32000, 'aus': False},
+	'collection': {'reclevel': 'brief', 'total': 40000, 'aus': True},
+	'people': {'reclevel': 'brief', 'total': 1000000, 'aus': True},
+	'newspaper': {'reclevel': 'full', 'total': 10000000, 'aus': False}
 }
 
 path = '/home/dhistory/webapps/troveis/troveis/'
 #path = ''
 
 def update_zone(zone):
-	results = get_items(zone, ZONES[zone]['total'], ZONES[zone]['reclevel'])
+	results = get_items(zone, ZONES[zone]['total'], ZONES[zone]['reclevel'], ZONES[zone]['aus'])
 	if results:
 		print 'OK'
 		with open(path + '{}.pickle'.format(zone), 'wb') as zone_file:
@@ -43,7 +43,7 @@ def update_totals():
 			pickle.dump(results, zone_file)
 
 
-def get_items(zone, total, reclevel='brief'):
+def get_items(zone, total, reclevel='brief', aus=True):
 	start = random.randint(0, total)
 	params = {
 		'q': ' ',
@@ -56,6 +56,8 @@ def get_items(zone, total, reclevel='brief'):
 		'sortby': random.choice(SORT_OPTIONS),
 		'key': credentials.TROVE_API_KEY
 	}
+	if aus:
+		params['l-australian'] = 'y'
 	results = get_results(params)
 	return results
 
