@@ -4,6 +4,7 @@ import random
 import requests
 from flask.ext.cache import Cache
 import calendar
+import pickle
 
 import credentials
 
@@ -64,14 +65,8 @@ def get_results(params):
 
 @cache.cached(timeout=60*60*24, key_prefix='get_totals')
 def get_totals():
-	params = {
-		'q': ' ',
-		'zone': 'all',
-		'encoding': 'json',
-		'n': 0,
-		'key': credentials.TROVE_API_KEY
-	}
-	results = get_results(params)
+	with open('totals.pickle', 'rb') as zone_file:
+		results = pickle.load(zone_file)
 	return results
 
 @cache.cached(timeout=60*5, key_prefix='get_examples')
@@ -118,10 +113,15 @@ def get_items(zone, total, reclevel='brief'):
 	return results
 
 
+def get_zone_results(zone):
+	with open('{}.pickle'.format(zone), 'rb') as zone_file:
+		results = pickle.load(zone_file)
+	return results
+
+
 @cache.cached(timeout=220, key_prefix='get_newspapers')
 def get_newspapers():
-	total = MAX_TOTAL
-	results = get_items('newspaper', total, reclevel='full')
+	results = get_zone_results('newspaper')
 	return results
 
 
@@ -134,8 +134,7 @@ def get_newspaper():
 
 @cache.cached(timeout=240, key_prefix='get_books')
 def get_books():
-	total = MAX_TOTAL
-	results = get_items('book', total)
+	results = get_zone_results('book')
 	return results
 
 
@@ -148,8 +147,7 @@ def get_book():
 
 @cache.cached(timeout=260, key_prefix='get_articles')
 def get_articles():
-	total = MAX_TOTAL
-	results = get_items('article', total)
+	results = get_zone_results('article')
 	return results
 
 
@@ -162,9 +160,7 @@ def get_article():
 
 @cache.cached(timeout=280, key_prefix='get_maps')
 def get_maps():
-	total = 150000
-	#total = get_zone_total('map')
-	results = get_items('map', total)
+	results = get_zone_results('map')
 	return results
 
 
@@ -177,8 +173,7 @@ def get_map():
 
 @cache.cached(timeout=300, key_prefix='get_sounds')
 def get_sounds():
-	total = MAX_TOTAL
-	results = get_items('music', total)
+	results = get_zone_results('music')
 	return results
 
 
@@ -192,7 +187,7 @@ def get_sound():
 @cache.cached(timeout=320, key_prefix='get_pictures')
 def get_pictures():
 	total = MAX_TOTAL
-	results = get_items('picture', total)
+	results = get_zone_results('picture')
 	return results
 
 
@@ -205,9 +200,7 @@ def get_picture():
 
 @cache.cached(timeout=340, key_prefix='get_archives')
 def get_archives():
-	total = 370000
-	#total = get_zone_total('collection')
-	results = get_items('collection', total)
+	results = get_zone_results('collection')
 	return results
 
 
@@ -220,9 +213,7 @@ def get_archive():
 
 @cache.cached(timeout=360, key_prefix='get_lists')
 def get_lists():
-	total = 32000
-	#total = get_zone_total('list')
-	results = get_items('list', total, reclevel='full')
+	results = get_zone_results('list')
 	return results
 
 
