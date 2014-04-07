@@ -118,7 +118,7 @@ def get_items(zone, total, reclevel='brief'):
 
 
 def get_zone_results(zone):
-	with open(path + 'troveis/{}.pickle'.format(zone), 'rb') as zone_file:
+	with open(path + '{}.pickle'.format(zone), 'rb') as zone_file:
 		results = pickle.load(zone_file)
 	return results
 
