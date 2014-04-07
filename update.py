@@ -7,13 +7,13 @@ import credentials
 SORT_OPTIONS = ['relevance', 'dateasc', 'datedesc']
 
 ZONES = {
-	'book': {'reclevel': 'brief', 'total': 200000, 'aus': True},
+	'book': {'reclevel': 'brief', 'total': 130000, 'aus': True},
 	'article': {'reclevel': 'brief', 'total': 1000000, 'aus': True},
 	'music': {'reclevel': 'brief', 'total': 200000, 'aus': True},
-	'map': {'reclevel': 'brief', 'total': 40000, 'aus': True},
-	'picture': {'reclevel': 'brief', 'total': 1000000, 'aus': True},
+	'map': {'reclevel': 'brief', 'total': 34000, 'aus': True},
+	'picture': {'reclevel': 'brief', 'total': 2000000, 'aus': True},
 	'list': {'reclevel': 'full', 'total': 32000, 'aus': False},
-	'collection': {'reclevel': 'brief', 'total': 40000, 'aus': True},
+	'collection': {'reclevel': 'brief', 'total': 19000, 'aus': True},
 	'people': {'reclevel': 'brief', 'total': 1000000, 'aus': True},
 	'newspaper': {'reclevel': 'full', 'total': 10000000, 'aus': False}
 }
@@ -49,11 +49,11 @@ def get_items(zone, total, reclevel='brief', aus=True):
 		'q': ' ',
 		'zone': zone,
 		'encoding': 'json',
-		'l-availability': 'y',
+		'l-availability': 'y/f',
 		'reclevel': reclevel,
 		'n': 100,
 		's': start,
-		'sortby': random.choice(SORT_OPTIONS),
+		#'sortby': random.choice(SORT_OPTIONS),
 		'key': credentials.TROVE_API_KEY
 	}
 	if aus:
