@@ -7,7 +7,7 @@ import credentials
 SORT_OPTIONS = ['relevance', 'dateasc', 'datedesc']
 
 ZONES = {
-	'book': {'reclevel': 'brief', 'total': 1000000, 'aus': True},
+	'book': {'reclevel': 'brief', 'total': 200000, 'aus': True},
 	'article': {'reclevel': 'brief', 'total': 1000000, 'aus': True},
 	'music': {'reclevel': 'brief', 'total': 200000, 'aus': True},
 	'map': {'reclevel': 'brief', 'total': 40000, 'aus': True},
