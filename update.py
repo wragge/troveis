@@ -18,12 +18,14 @@ ZONES = {
 	'newspaper': {'reclevel': 'full', 'total': 10000000}
 }
 
+path = '/home/dhistory/webapps/troveis/troveis/'
+#path = ''
 
 def update_zone(zone):
 	results = get_items(zone, ZONES[zone]['total'], ZONES[zone]['reclevel'])
 	if results:
 		print 'OK'
-		with open('cache/{}.pickle'.format(zone), 'wb') as zone_file:
+		with open(path + '{}.pickle'.format(zone), 'wb') as zone_file:
 			pickle.dump(results, zone_file)
 
 
@@ -37,7 +39,7 @@ def update_totals():
 	}
 	results = get_results(params)
 	if results:
-		with open('cache/totals.pickle'.format(zone), 'wb') as zone_file:
+		with open(path + 'totals.pickle'.format(zone), 'wb') as zone_file:
 			pickle.dump(results, zone_file)
 
 
